@@ -291,4 +291,27 @@ input:focus {
 .pdf-status{margin-top:12px;text-align:center;font-size:14px}
 .hidden{display:none}
 
+.pdf-status {
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--tg-text);
+  text-align: center;
+}
 
+.pdf-status a {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
+.download-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 14px;
+}
