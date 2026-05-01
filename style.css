@@ -226,9 +226,10 @@ input:focus {
 }
 
 .debug-box {
-  background: rgba(17,24,39,0.04);
+ /* background: rgba(17,24,39,0.04);
   color: var(--tg-muted);
-  white-space: pre-wrap;
+  white-space: pre-wrap;*/
+  display: none !important;
 }
 
 .result-item {
