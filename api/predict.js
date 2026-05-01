@@ -1,13 +1,12 @@
 export default async function handler(req, res) {
   try {
-    const token = req.query.token;
-
-    if (token !== process.env.API_TOKEN) {
-      return res.status(403).json({ error: "Forbidden" });
-    }
-
     if (req.method !== "GET") {
       return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    const token = req.query.token;
+    if (token !== process.env.API_TOKEN) {
+      return res.status(403).json({ error: "Forbidden" });
     }
 
     const { home_state, gender, category, is_pwd, crl_rank } = req.query;
@@ -32,52 +31,18 @@ export default async function handler(req, res) {
     });
 
     const apiUrl = `${baseUrl}?${params.toString()}`;
-    console.log("API URL:", apiUrl);
 
     const apiRes = await fetch(apiUrl, {
       method: "GET",
-      headers: { accept: "application/json" }
+      headers: {
+        accept: "application/json"
+      }
     });
 
     const text = await apiRes.text();
-    console.log("Upstream status:", apiRes.status);
-    console.log("Upstream preview:", text.slice(0, 300));
-
     return res.status(apiRes.status).send(text);
   } catch (err) {
     console.error("predict.js error:", err);
     return res.status(500).json({ error: err.message });
-  }
-}      method: "GET",
-      headers: {
-        accept: "application/json"
-      }
-    });
-
-    const text = await apiRes.text();
-    res.status(apiRes.status).send(text);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}      headers: {
-        accept: "application/json"
-      }
-    });
-
-    const text = await apiRes.text();
-    res.status(apiRes.status).send(text);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}      method: "GET",
-      headers: {
-        accept: "application/json"
-      }
-    });
-
-    const text = await apiRes.text();
-    res.status(apiRes.status).send(text);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
   }
 }
