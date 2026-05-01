@@ -560,7 +560,7 @@
     });
 
 document.getElementById("fetchBtn").addEventListener("click", async () => {
-  const url = `/api/predict?token=YOUR_TOKEN_HERE&home_state=${encodeURIComponent(state.home_state)}&gender=${encodeURIComponent(state.gender)}&category=${encodeURIComponent(state.category)}&is_pwd=${encodeURIComponent(state.is_pwd)}&crl_rank=${encodeURIComponent(state.crl_rank)}`;
+  const url = `/api/predict?token=collegePredictor2026&home_state=${encodeURIComponent(state.home_state)}&gender=${encodeURIComponent(state.gender)}&category=${encodeURIComponent(state.category)}&is_pwd=${encodeURIComponent(state.is_pwd)}&crl_rank=${encodeURIComponent(state.crl_rank)}`;
 
   showDebug(`Proxy URL:
 ${url}
