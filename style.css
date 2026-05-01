@@ -276,3 +276,12 @@ input:focus {
     padding: 16px;
   }
 }
+
+.loader-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px}
+.spinner{width:42px;height:42px;border:4px solid rgba(255,255,255,.2);border-top:4px solid #fff;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fade-in{animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.download-btn{margin-top:16px;width:100%;padding:16px;background:#22c55e;color:white;border:none;border-radius:12px;font-weight:600}
+.pdf-status{margin-top:12px;text-align:center;font-size:14px}
+.hidden{display:none}
