@@ -148,7 +148,7 @@ function showLoadingAnimation() {
 
 // DOWNLOAD CLICK
 downloadBtn?.addEventListener('click', () => {
-  pdfStatus.innerHTML = 'To get full PDF and personalised choice filling contact to <a href="https://telegram.me/Night8killer" target="_blank" rel="noopener">https://telegram.me/Night8killer</a>';
+  pdfStatus.innerHTML = 'To get full PDF and personalised choice filling contact to <a href="https://telegram.me/Night8killer" target="_blank" rel="noopener">Aktu Counsellor (Night8killer)</a>';
   downloadBtn.disabled = true;
   downloadBtn.textContent = "Contact Shown";
   downloadBtn.style.opacity = "0.7";
