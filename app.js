@@ -284,7 +284,8 @@ ${text.slice(0, 500)}`);
 
     statusBox.className = "status success";
     statusBox.textContent = `Success. Found ${items.length} matching records.`;
-    resultsBox.innerHTML = items.map((item, index) => formatItem(item, index + 1)).join("");
+    showLoadingAnimation();
+    setTimeout(() => renderTop5(items), 800);
   } catch (err) {
     statusBox.className = "status error";
     statusBox.textContent = `API request failed: ${err.message}`;
