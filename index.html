@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AKTU / UPTAC College Predictor</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #01696f;
+      --primary-dark: #00545a;
+      --border: #d1d5db;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --danger: #b91c1c;
+      --success: #047857;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), #0b8a92);
+      color: white;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .header p {
+      margin: 0;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-size: 20px;
+      margin: 0 0 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(1,105,111,0.12);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .option-btn {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      padding: 12px;
+      border-radius: 12px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .option-btn:hover {
+      background: #eefaf9;
+      border-color: var(--primary);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .summary-box {
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      padding: 16px;
+      border-radius: 14px;
+      margin-top: 18px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .result-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+    }
+
+    .result-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .result-card p {
+      margin: 4px 0;
+      color: #374151;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .small-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .loading {
+      padding: 14px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .error {
+      background: #fef2f2;
+      color: var(--danger);
+      border: 1px solid #fecaca;
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .success {
+      background: #ecfdf5;
+      color: var(--success);
+      border: 1px solid #a7f3d0;
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: #374151;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-top: 8px;
+    }
+
+    #debugBox {
+      white-space: pre-wrap;
+      background: #f8fafc;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-top: 12px;
+      min-height: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>AKTU / UPTAC College Predictor</h1>
+      <p>Same Telegram bot logic, now converted into a working website.</p>
+    </div>
+
+    <div class="card" id="stepCard">
+      <h2 class="step-title" id="stepTitle">Enter your CRL Rank</h2>
+      <p class="muted" id="stepDesc">
+        Start by entering your rank. Then the website will ask the next question step by step.
+      </p>
+
+      <div id="rankStep">
+        <div class="field">
+          <label for="rankInput">CRL Rank</label>
+          <input type="number" id="rankInput" placeholder="Enter your rank e.g. 185000" />
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn-primary" id="rankNextBtn">Next</button>
+        </div>
+      </div>
+
+      <div id="homeStateStep" class="hidden">
+        <div class="option-grid">
+          <button type="button" class="option-btn" data-home="UTTAR_PRADESH">Uttar Pradesh</button>
+          <button type="button" class="option-btn" data-home="OTHER_STATE">Other State</button>
+        </div>
+      </div>
+
+      <div id="genderStep" class="hidden">
+        <div class="option-grid">
+          <button type="button" class="option-btn" data-gender="Male">Male</button>
+          <button type="button" class="option-btn" data-gender="Female">Female</button>
+        </div>
+      </div>
+
+      <div id="categoryStep" class="hidden">
+        <div class="option-grid">
+          <button type="button" class="option-btn" data-category="GEN">GEN</button>
+          <button type="button" class="option-btn" data-category="OBC-NCL">OBC-NCL</button>
+          <button type="button" class="option-btn" data-category="GEN-EWS">GEN-EWS</button>
+          <button type="button" class="option-btn" data-category="SC">SC</button>
+          <button type="button" class="option-btn" data-category="ST">ST</button>
+        </div>
+      </div>
+
+      <div id="pwdStep" class="hidden">
+        <div class="option-grid">
+          <button type="button" class="option-btn" data-pwd="true">True</button>
+          <button type="button" class="option-btn" data-pwd="false">False</button>
+        </div>
+      </div>
+
+      <div id="summaryStep" class="hidden">
+        <div class="summary-box" id="summaryBox"></div>
+        <div class="btn-row">
+          <button type="button" class="btn-primary" id="fetchBtn">Fetch Colleges</button>
+          <button type="button" class="btn-secondary" id="restartBtn">Start Again</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="step-title">Results</h2>
+      <div id="statusBox" class="loading">No search performed yet.</div>
+      <div id="debugBox"></div>
+      <div id="resultsBox"></div>
+      <p class="small-note">
+        Note: This website uses the same API logic as your bot. If API response structure changes, result parsing may need small adjustment.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const BASE_URL = "https://api.ogcollege.io/api/v1/cutoffs/predict-college/6298363b-49bd-45f0-af9b-971545c00997";
+    const FIXED_PARAMS = {
+      page_no: 0,
+      page_size: 10000,
+      search: "",
+      program_ids: "[]",
+      institute_types: "[]",
+    };
+
+    const state = {
+      crl_rank: null,
+      home_state: null,
+      gender: null,
+      category: null,
+      is_pwd: null
+    };
+
+    const stepTitle = document.getElementById("stepTitle");
+    const stepDesc = document.getElementById("stepDesc");
+    const rankStep = document.getElementById("rankStep");
+    const homeStateStep = document.getElementById("homeStateStep");
+    const genderStep = document.getElementById("genderStep");
+    const categoryStep = document.getElementById("categoryStep");
+    const pwdStep = document.getElementById("pwdStep");
+    const summaryStep = document.getElementById("summaryStep");
+    const summaryBox = document.getElementById("summaryBox");
+    const statusBox = document.getElementById("statusBox");
+    const resultsBox = document.getElementById("resultsBox");
+    const debugBox = document.getElementById("debugBox");
+
+    function showDebug(msg) {
+      debugBox.textContent = msg;
+    }
+
+    function showOnly(step) {
+      [rankStep, homeStateStep, genderStep, categoryStep, pwdStep, summaryStep].forEach(el => {
+        el.classList.add("hidden");
+      });
+      step.classList.remove("hidden");
+    }
+
+    function setTitle(title, desc) {
+      stepTitle.textContent = title;
+      stepDesc.textContent = desc;
+    }
+
+    function buildUrl() {
+      const params = new URLSearchParams({
+        home_state: state.home_state,
+        gender: state.gender,
+        category: state.category,
+        is_pwd: state.is_pwd,
+        crl_rank: state.crl_rank,
+        ...FIXED_PARAMS
+      });
+      return `${BASE_URL}?${params.toString()}`;
+    }
+
+    function extractItems(payload) {
+      if (Array.isArray(payload)) {
+        return payload.filter(item => item && typeof item === "object");
+      }
+
+      if (payload && typeof payload === "object") {
+        const possibleKeys = ["data", "results", "items", "colleges", "predictions", "rows", "docs"];
+
+        for (const key of possibleKeys) {
+          const value = payload[key];
+
+          if (Array.isArray(value)) {
+            return value.filter(item => item && typeof item === "object");
+          }
+
+          if (value && typeof value === "object") {
+            for (const subkey of possibleKeys) {
+              const subvalue = value[subkey];
+              if (Array.isArray(subvalue)) {
+                return subvalue.filter(item => item && typeof item === "object");
+              }
+            }
+          }
+        }
+
+        for (const value of Object.values(payload)) {
+          if (Array.isArray(value) && value.length && typeof value[0] === "object") {
+            return value;
+          }
+          if (value && typeof value === "object") {
+            for (const subvalue of Object.values(value)) {
+              if (Array.isArray(subvalue) && subvalue.length && typeof subvalue[0] === "object") {
+                return subvalue;
+              }
+            }
+          }
+        }
+      }
+
+      return [];
+    }
+
+    function valueFromKeys(item, keys, fallback = "N/A") {
+      for (const key of keys) {
+        const value = item?.[key];
+        if (value !== undefined && value !== null && value !== "") {
+          return value;
+        }
+      }
+      return fallback;
+    }
+
+    function formatItem(item, index) {
+      const college = item.college || {};
+      const collegeName = college.name || valueFromKeys(item, ["college_name", "institute_name", "name"], "N/A");
+
+      const programs = item.programs || item.program || [];
+      const prog = Array.isArray(programs) ? (programs[0] || {}) : (programs || {});
+
+      const branch = valueFromKeys(prog, ["name", "program_name", "branch_name"], "N/A");
+      const courseType = valueFromKeys(prog, ["course_type", "type"], "N/A");
+      const opening = valueFromKeys(prog, ["opening_rank", "opening", "open_rank"], "N/A");
+      const closing = valueFromKeys(prog, ["closing_rank", "closing", "close_rank"], "N/A");
+      const quota = valueFromKeys(prog, ["quota"], "N/A");
+      const category = valueFromKeys(prog, ["category"], "N/A");
+
+      return `
+        <div class="result-card">
+          <h3>${index}. ${collegeName}</h3>
+          <p><b>Program:</b> ${branch} (${courseType})</p>
+          <p><b>Opening Rank:</b> ${opening}</p>
+          <p><b>Closing Rank:</b> ${closing}</p>
+          <p><b>Quota:</b> ${quota}</p>
+          <p><b>Category:</b> ${category}</p>
+          <div>
+            <span class="chip">College match</span>
+            <span class="chip">API data</span>
+          </div>
+        </div>
+      `;
+    }
+
+    document.getElementById("rankNextBtn").addEventListener("click", () => {
+      const value = document.getElementById("rankInput").value.trim().replace(/,/g, "");
+      if (!value || isNaN(Number(value))) {
+        alert("Please enter a valid numeric CRL rank.");
+        return;
+      }
+
+      state.crl_rank = Number(value);
+      setTitle("Select Home State", "Choose whether you belong to Uttar Pradesh or Other State.");
+      showOnly(homeStateStep);
+    });
+
+    homeStateStep.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-home]");
+      if (!btn) return;
+
+      state.home_state = btn.dataset.home;
+      setTitle("Select Gender", "Now choose your gender.");
+      showOnly(genderStep);
+    });
+
+    genderStep.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-gender]");
+      if (!btn) return;
+
+      state.gender = btn.dataset.gender;
+
+      if (state.home_state === "OTHER_STATE") {
+        state.category = "GEN";
+        state.is_pwd = null;
+        summaryBox.innerHTML = `
+          <b>Home State:</b> Other State<br>
+          <b>Gender:</b> ${state.gender}<br>
+          <b>Category:</b> GEN (auto-set because home state is Other State)<br>
+          <b>PwD:</b> Will be asked next
+        `;
+        setTitle("Select PwD Status", "Since home state is Other State, category is auto GEN.");
+        showOnly(pwdStep);
+      } else {
+        setTitle("Select Category", "Choose your category.");
+        showOnly(categoryStep);
+      }
+    });
+
+    categoryStep.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-category]");
+      if (!btn) return;
+
+      state.category = btn.dataset.category;
+      setTitle("Select PwD Status", "Choose whether you are PwD eligible.");
+      showOnly(pwdStep);
+    });
+
+    pwdStep.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-pwd]");
+      if (!btn) return;
+
+      state.is_pwd = btn.dataset.pwd;
+
+      summaryBox.innerHTML = `
+        <b>Rank:</b> ${state.crl_rank}<br>
+        <b>Home State:</b> ${state.home_state}<br>
+        <b>Gender:</b> ${state.gender}<br>
+        <b>Category:</b> ${state.category || "GEN"}<br>
+        <b>PwD:</b> ${state.is_pwd}
+      `;
+      setTitle("Review Details", "Check your inputs before fetching colleges.");
+      showOnly(summaryStep);
+    });
+
+    document.getElementById("restartBtn").addEventListener("click", () => {
+      state.crl_rank = null;
+      state.home_state = null;
+      state.gender = null;
+      state.category = null;
+      state.is_pwd = null;
+
+      document.getElementById("rankInput").value = "";
+      resultsBox.innerHTML = "";
+      statusBox.className = "loading";
+      statusBox.textContent = "No search performed yet.";
+      showDebug("");
+      setTitle("Enter your CRL Rank", "Start by entering your rank. Then the website will ask the next question step by step.");
+      showOnly(rankStep);
+    });
+
+document.getElementById("fetchBtn").addEventListener("click", async () => {
+  const url = `/api/predict?home_state=${encodeURIComponent(state.home_state)}&gender=${encodeURIComponent(state.gender)}&category=${encodeURIComponent(state.category)}&is_pwd=${encodeURIComponent(state.is_pwd)}&crl_rank=${encodeURIComponent(state.crl_rank)}`;
+
+  showDebug(`Proxy URL:
+${url}
+
+Fetching...`);
+
+  statusBox.className = "loading";
+  statusBox.textContent =
+    `Fetching colleges with:
+` +
+    `Rank: ${state.crl_rank}
+` +
+    `Home State: ${state.home_state}
+` +
+    `Gender: ${state.gender}
+` +
+    `Category: ${state.category}
+` +
+    `PwD: ${state.is_pwd}
+
+Loading...`;
+
+  try {
+    const response = await fetch(url);
+    const text = await response.text();
+
+    showDebug(
+      `Proxy URL:
+${url}
+
+Status: ${response.status} ${response.statusText}
+
+Raw response preview:
+${text.slice(0, 500)}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    let payload;
+    try {
+      payload = JSON.parse(text);
+    } catch (e) {
+      throw new Error("Response is not valid JSON");
+    }
+
+    const items = extractItems(payload);
+
+    if (!items.length) {
+      statusBox.className = "error";
+      statusBox.textContent = "No colleges found.";
+      resultsBox.innerHTML = "";
+      return;
+    }
+
+    statusBox.className = "success";
+    statusBox.textContent = `Success. Found ${items.length} matching records.`;
+    resultsBox.innerHTML = items.map((item, index) => formatItem(item, index + 1)).join("");
+  } catch (err) {
+    statusBox.className = "error";
+    statusBox.textContent = `API request failed: ${err.message}`;
+    showDebug(`Proxy URL:
+${url}
+
+Error:
+${err.message}`);
+    resultsBox.innerHTML = "";
+  }
+});
+
+showOnly(rankStep);
+  </script>
+</body>
+</html>
