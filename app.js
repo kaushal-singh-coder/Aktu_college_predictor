@@ -225,7 +225,9 @@ document.getElementById("restartBtn").addEventListener("click", () => {
   state.gender = null;
   state.category = null;
   state.is_pwd = null;
-
+  
+  document.getElementById("pdfStatus").innerHTML = "";         // PDF text hatao
+  document.getElementById("downloadBtn").classList.add("hidden"); // Button hide karo
   document.getElementById("rankInput").value = "";
   resultsBox.innerHTML = "";
   statusBox.className = "status idle";
