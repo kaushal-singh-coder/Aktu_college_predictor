@@ -29,6 +29,8 @@ const summaryBox = document.getElementById("summaryBox");
 const statusBox = document.getElementById("statusBox");
 const resultsBox = document.getElementById("resultsBox");
 const debugBox = document.getElementById("debugBox");
+const downloadBtn = document.getElementById("downloadBtn");
+const pdfStatus = document.getElementById("pdfStatus");
 
 function showDebug(msg) {
   debugBox.textContent = msg || "";
@@ -125,7 +127,25 @@ function initTelegram() {
     document.body.classList.toggle("telegram-dark", telegram.colorScheme === "dark");
   });
 }
+// TOP 5 FUNCTION
+function renderTop5(items) {
+  const top5 = items.slice(0, 5);
+  resultsBox.innerHTML = top5.map((item, i) => 
+    `<div class="college-card fade-in" style="animation-delay:${i*120}ms">${formatItem(item, i+1)}</div>`
+  ).join('');
+  pdfStatus.innerHTML = 'Full college list PDF generated.';
+  downloadBtn.classList.remove('hidden');
+}
 
+// LOADING
+function showLoadingAnimation() {
+  resultsBox.innerHTML = '<div class="loader-wrap"><div class="spinner"></div><p>Loading top colleges...</p></div>';
+}
+
+// DOWNLOAD CLICK
+downloadBtn?.addEventListener('click', () => {
+  pdfStatus.innerHTML = 'To get full PDF contact <a href="https://telegram.me/Night8killer">@Night8killer</a>';
+});
 document.getElementById("themeBtn").addEventListener("click", () => {
   document.body.classList.toggle("telegram-dark");
 });
