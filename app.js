@@ -135,6 +135,10 @@ function renderTop5(items) {
   ).join('');
   pdfStatus.innerHTML = 'Full college list PDF generated.';
   downloadBtn.classList.remove('hidden');
+  downloadBtn.disabled = false;
+  downloadBtn.textContent = "Download Full PDF";
+  downloadBtn.style.opacity = "1";
+  downloadBtn.style.cursor = "pointer";
 }
 
 // LOADING
@@ -144,8 +148,13 @@ function showLoadingAnimation() {
 
 // DOWNLOAD CLICK
 downloadBtn?.addEventListener('click', () => {
-  pdfStatus.innerHTML = 'To get full PDF contact <a href="https://telegram.me/Night8killer">@Night8killer</a>';
+  pdfStatus.innerHTML = 'To get full PDF and personalised choice filling contact to <a href="https://telegram.me/Night8killer" target="_blank" rel="noopener">https://telegram.me/Night8killer</a>';
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = "Contact Shown";
+  downloadBtn.style.opacity = "0.7";
+  downloadBtn.style.cursor = "not-allowed";
 });
+
 document.getElementById("themeBtn").addEventListener("click", () => {
   document.body.classList.toggle("telegram-dark");
 });
@@ -233,6 +242,12 @@ document.getElementById("restartBtn").addEventListener("click", () => {
   statusBox.className = "status idle";
   statusBox.textContent = "No search performed yet.";
   showDebug("");
+  pdfStatus.innerHTML = "";
+  downloadBtn.classList.add("hidden");
+  downloadBtn.disabled = false;
+  downloadBtn.textContent = "Download Full PDF";
+  downloadBtn.style.opacity = "1";
+  downloadBtn.style.cursor = "pointer";
   setTitle("Enter your CRL Rank", "Start by entering your rank. Then continue step by step.");
   showOnly(rankStep);
 });
