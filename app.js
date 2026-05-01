@@ -28,7 +28,11 @@ const summaryStep = document.getElementById("summaryStep");
 const summaryBox = document.getElementById("summaryBox");
 const statusBox = document.getElementById("statusBox");
 const resultsBox = document.getElementById("resultsBox");
+const debugBox = document.getElementById("debugBox");
 
+function showDebug(msg) {
+  debugBox.textContent = msg || "";
+}
 
 function showOnly(step) {
   [rankStep, homeStateStep, genderStep, categoryStep, pwdStep, summaryStep].forEach(el => el.classList.add("hidden"));
