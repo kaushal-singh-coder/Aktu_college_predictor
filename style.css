@@ -285,3 +285,15 @@ input:focus {
 .download-btn{margin-top:16px;width:100%;padding:16px;background:#22c55e;color:white;border:none;border-radius:12px;font-weight:600}
 .pdf-status{margin-top:12px;text-align:center;font-size:14px}
 .hidden{display:none}
+
+.info-box {
+  background: rgba(255,255,255,0.8);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.info-box p { margin: 4px 0; }
+.info-box em { color: #ef4444; }
+body.telegram-dark .info-box { background: rgba(0,0,0,0.3); }
