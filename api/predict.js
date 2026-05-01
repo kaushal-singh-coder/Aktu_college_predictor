@@ -1,9 +1,10 @@
 export default async function handler(req, res) {
   const token = req.query.token;
   if (token !== process.env.API_TOKEN) {
-    return res.status(403).json({ error: "Forbidden" });
+     return res.status(403).json({ error: "Forbidden" });
   }
-
+  
+  
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -35,6 +36,16 @@ export default async function handler(req, res) {
     const apiRes = await fetch(apiUrl, {
       method: "GET",
       headers: {
+        accept: "application/json"
+      }
+    });
+
+    const text = await apiRes.text();
+    res.status(apiRes.status).send(text);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}      headers: {
         accept: "application/json"
       }
     });
