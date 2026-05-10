@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AKTU College Predictor - Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+    }
+
+    .landing-card {
+      background: white;
+      border-radius: 24px;
+      padding: 48px 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 36px;
+      line-height: 1.5;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 18px 24px;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: 0.3px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-admin {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      box-shadow: 0 8px 25px rgba(30, 60, 114, 0.4);
+    }
+
+    .btn-admin:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(30, 60, 114, 0.5);
+    }
+
+    .btn-student {
+      background: linear-gradient(135deg, #2aabee 0%, #229ed9 100%);
+      color: white;
+      box-shadow: 0 8px 25px rgba(42, 171, 238, 0.4);
+    }
+
+    .btn-student:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(42, 171, 238, 0.5);
+    }
+
+    .icon {
+      font-size: 22px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    /* Password Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-icon {
+      font-size: 44px;
+      margin-bottom: 12px;
+    }
+
+    .modal-box h2 {
+      font-size: 22px;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+
+    .modal-box p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      margin-bottom: 8px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .password-input:focus {
+      border-color: #667eea;
+    }
+
+    .error-msg {
+      color: #d93025;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+      text-align: left;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-submit {
+      flex: 1;
+      padding: 14px;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(30, 60, 114, 0.4);
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 14px;
+      background: #f5f5f5;
+      color: #666;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-cancel:hover {
+      background: #e8e8e8;
+    }
+
+    .shake {
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-card">
+    <div class="logo">🎓</div>
+    <h1>AKTU College Predictor</h1>
+    <p class="subtitle">Fast cutoff-based college suggestions for UPTAC counseling</p>
+
+    <div class="btn-group">
+      <!-- Admin button - opens password modal -->
+      <button class="btn btn-admin" id="adminBtn">
+        <span class="icon">🔐</span> Admin Login
+      </button>
+
+      <!-- Student button - direct link to predictor -->
+      <a href="https://aktu-college-predictor.vercel.app" class="btn btn-student">
+        <span class="icon">🎒</span> Student Login
+      </a>
+    </div>
+
+    <p class="footer">Select your role to continue</p>
+  </div>
+
+  <!-- Password Modal -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal-box" id="modalBox">
+      <div class="modal-icon">🔐</div>
+      <h2>Admin Login</h2>
+      <p>Enter password to access the admin panel</p>
+      
+      <input 
+        type="password" 
+        class="password-input" 
+        id="passwordInput" 
+        placeholder="Enter admin password"
+        autocomplete="off"
+      />
+      
+      <div class="error-msg" id="errorMsg">❌ Incorrect password. Try again.</div>
+      
+      <div class="modal-btns">
+        <button class="btn-cancel" id="cancelBtn">Cancel</button>
+        <button class="btn-submit" id="submitBtn">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====== CONFIGURE YOUR PASSWORD HERE ======
+    const ADMIN_PASSWORD = "admin123"; // 👈 CHANGE THIS to your desired password
+    const ADMIN_URL = "/admin";        // 👈 CHANGE THIS to your admin panel URL
+    // ==========================================
+
+    const adminBtn = document.getElementById("adminBtn");
+    const passwordModal = document.getElementById("passwordModal");
+    const modalBox = document.getElementById("modalBox");
+    const passwordInput = document.getElementById("passwordInput");
+    const errorMsg = document.getElementById("errorMsg");
+    const submitBtn = document.getElementById("submitBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    // Open modal
+    adminBtn.addEventListener("click", () => {
+      passwordModal.classList.add("active");
+      passwordInput.value = "";
+      errorMsg.classList.remove("show");
+      modalBox.classList.remove("shake");
+      setTimeout(() => passwordInput.focus(), 100);
+    });
+
+    // Close modal
+    function closeModal() {
+      passwordModal.classList.remove("active");
+      passwordInput.value = "";
+      errorMsg.classList.remove("show");
+    }
+
+    cancelBtn.addEventListener("click", closeModal);
+
+    // Close on outside click
+    passwordModal.addEventListener("click", (e) => {
+      if (e.target === passwordModal) closeModal();
+    });
+
+    // Submit password
+    function checkPassword() {
+      const enteredPassword = passwordInput.value.trim();
+      
+      if (enteredPassword === ADMIN_PASSWORD) {
+        // ✅ Correct password - redirect
+        window.location.href = ADMIN_URL;
+      } else {
+        // ❌ Wrong password - show error
+        errorMsg.classList.add("show");
+        modalBox.classList.remove("shake");
+        void modalBox.offsetWidth; // Trigger reflow
+        modalBox.classList.add("shake");
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    }
+
+    submitBtn.addEventListener("click", checkPassword);
+
+    // Enter key to submit
+    passwordInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") checkPassword();
+    });
+
+    // Escape key to close
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && passwordModal.classList.contains("active")) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
